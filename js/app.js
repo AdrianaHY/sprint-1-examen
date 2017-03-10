@@ -2,14 +2,7 @@ var estudiantes = [];
 
 function obtenerListaEstudiantes() {
     // TO DO: Retornar la lista de estudiantes
-  //Agrega un objeto con las propiedades de cada estudiante
-    var estudiante = {
-        nombre :"",
-        puntajeTecnico: "",
-        puntajeHse: "",
-    }
-    //Agrega al arreglo de estudiantes los datos de cada estudiante.
-    estudiantes.push (estudiante);
+    return estudiantes;//Devuelve el arreglo que por ahora está vacío.
 
 }
 
@@ -18,16 +11,15 @@ function agregarEstudiante() {
     // Hint: El estudiante debe ser agregado a la lista de estudiantes
     // TO DO: Retornar el estudiante recientemente creado
 
-  //Arroja una ventana con cada pregunta para agregar a la estudiante.
-    var preguntaUno = prompt ("Nombre de la estudiante: " );
+    var preguntaUno = prompt ("Nombre de la estudiante: " );//Arroja una ventana para que el usuario ingrese los datos.
     var preguntaDos = prompt ("Porcentaje técnico: " );
     var preguntaTres = prompt ("Porcentaje Habilidades Socio-Emocionales: " );
-    var estudiante = {};
-    //Asigna a cada propiedad del objeto el valor dado a cada pregunta.
-    estudiante.nombre = preguntaUno;
-    estudiante.puntajeTecnico = preguntaDos;
-    estudiante.puntajeHse = preguntaTres;
-
+    var estudiante = {//Objeto literal en donde se colocan las propiedades de cada estudiante
+      nombre : preguntaUno,
+      puntajeTecnico: preguntaDos,
+      puntajeHse: preguntaTres
+    };
+    estudiantes.push(estudiante);//Agrega al arreglo vacío cada estudiante
     return estudiante;
 
 }
@@ -52,15 +44,11 @@ function mostrar(estudiante) {
 function mostrarLista(estudiantes) {
     // TO DO: Iterar la lista del estudiantes para devolverlos en el formato que usa la función mostrar(estudiante)
     // Retornar el template de todos los estudiantes
-
-  //ciclo para buscar los datos de los estudiantes
-  for ( var i = 0 ; i <= estudiantes ; i++) {
-    estudiantes = estudiantes [i] + estudiantes [i + 1];
-
-
-  }
-  //se invoca la función que contiene los datos del estudiante
-  return mostrar(resultado);
+    var resultado = "";//declaramos una variable en donde guardaremos el resultado de for each
+    estudiantes.forEach (function (estudiante){
+      resultado += mostrar (estudiante);
+    });
+    return resultado;
 
 }
 
@@ -69,9 +57,10 @@ function buscar(nombre, estudiantes) {
     // Retornar el objeto del estudiante buscado
     // Nota: NO IMPORTA SI EL USUARIO ESCRIBE EL NOMBRE EN MAYÚSCULAS O MINÚSCULAS
 
-    for ( var i = 0; nombre == estudiante.nombre ; i++){
-    //
-    }
+    var buscarEstudiante = estudiantes.filter (function (estudiante) {//Se utiliza el método filter para comparar el nombre ingresado y la propiedad del objeto
+      return estudiante.nombre.toLowerCase() === nombre.toLocaleLowerCase();//para que arroje el que es igual al que el usuario busca
+    });
+    return buscarEstudiante;//devuelve el objeto que busca el estudiante
 
 
 }
@@ -79,24 +68,16 @@ function buscar(nombre, estudiantes) {
 function topTecnico(estudiantes) {
     // TO DO: Retornar el arreglo de estudiantes ordenado por puntaje técnico de mayor a menor
 
-    //para la longitud del arreglo
-    var numeroDeElementos = estudiantes.length;
-    var temporal;
-    //ciclo para comparar los números y ver cual es mayor.
-      for ( var comparacion = 0; comparacion < numeroDeElementos; comparacion++){
-        for (var indice= 0; indice < numeroDeElementos; indice ++){
-          if (estudiantes [indice] < estudiantes [indice + 1]){
-            temporal = estudiantes [indice];
-            estudiantes [indice] = estudiantes [indice+1];
-            estudiantes [indice + 1] = temporal;
-          }
-        }
-      }
-
-      return estudiantes;
+    var estudiantesTopTecnico = estudiantes.sort (function (a,b){//Se ocupa em método sort para ordenar los objetos dentro del arreglo
+      return b.puntajeTecnico > a.puntajeTecnico //Sort ordena de menor a mayor, en este caso se invierte porque es de mayor a menor.
+    });
+    return estudiantesTopTecnico;
 }
 
 function topHSE(estudiantes) {
     // TO DO: Retornar el arreglo de estudiantes ordenado por puntaje de HSE de mayor a menor
-
+    var estudiantesTopHse = estudiantes.sort (function (a,b){//Se ocupa el método sort para ordenar los objetos dentro del arreglo
+      return b.puntajeHse > a.puntajeHse//Sort ordena de menor a mayor, en este caso se invierte porque es de mayor a menor.
+    });
+    return estudiantesTopHse;
 }
